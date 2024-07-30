@@ -1,0 +1,13 @@
+@keyframes moveLoader {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .animate-loader {
+    animation: moveLoader 0.5s linear infinite;
+  }
+  
