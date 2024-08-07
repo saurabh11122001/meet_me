@@ -25,6 +25,7 @@ const userRouter = require("./routes/userRouter");
 const postRouter = require("./routes/postRouter");
 const messageRouter = require("./routes/messageRouter");
 const index = require("./routes/index");
+const userModel = require("./models/userModel");
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -69,13 +70,14 @@ io.on('connection', (socket) => {
     })  
     
     //to send data to specific user
-    socket.on("send",(data)=>{
+    socket.on("send",async (data)=>{
         let {id,message}=data;
         if(message.sender===id){
             return
         }
         socket.emit("received",message);
         socket.in(id).emit("received",message);
+        console.log(message.id);
     })
     //for realtime notification 
     socket.on("notification",(data)=>{

@@ -1,4 +1,4 @@
-import React, { useEffect,useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import appContext from "../context/AppContext";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,12 +10,12 @@ import { FiEdit } from "react-icons/fi";
 const Profile = () => {
   const { user, setLoader, getUser, setOnline } = useContext(appContext);
   const [loading, setLoading] = useState(false);
-  const [pic,setPic]=useState(null)
+  const [pic, setPic] = useState(null);
   const navigate = useNavigate();
   const host = process.env.REACT_APP_HOST;
   const fileInputRef = useRef(null);
 
-  //Checking User
+  // Checking User
   useEffect(() => {
     const checkUser = async () => {
       try {
@@ -34,7 +34,7 @@ const Profile = () => {
     checkUser();
   }, []);
 
-  //Logout
+  // Logout
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
@@ -63,7 +63,6 @@ const Profile = () => {
   };
 
   const handleIconClick = () => {
-    // Programmatically click the hidden file input
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -76,22 +75,28 @@ const Profile = () => {
   let formData = new FormData();
   formData.append('image', pic);
 
-  const updatePicture=async(req,res)=>{
+  const updatePicture = async () => {
     try {
-      let response = await fetch(`${process.env.REACT_APP_HOST}/users/updateimage`,{
+      let response = await fetch(`${process.env.REACT_APP_HOST}/users/updateimage`, {
         method: 'POST',
         body: formData,
         credentials: "include"
       });
-      if(response.ok){
-        let data= await response.json();
-        console.log("picture updated");
+      if (response.ok) {
+        let data = await response.json();
       }
     } catch (error) {
       console.log(error);
     }
   }
 
+  if (!user) {
+    return (
+      <div className="loader bg-black opacity-70 absolute min-h-screen flex items-center justify-center w-full z-10">
+        <div className="text-white text-5xl">Loading..</div>
+      </div>
+    );
+  }
   
   if (!user) {
     return (

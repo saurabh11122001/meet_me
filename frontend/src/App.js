@@ -12,6 +12,8 @@ import ChatPage from "./components/Chatpage";
 import Notification from "./components/Notification";
 import Friends from "./components/Friends";
 import Friendreq from "./components/Friendreq";
+import InbChat from "./components/Inbox&Chatpage/InbChat";
+import Chatpage2 from "./components/Inbox&Chatpage/Chatpage2";
 function App() {
 
   return (
@@ -30,6 +32,7 @@ function App() {
           <Route path="/inbox" element={<Inbox/>}/>
           <Route path="/profile" element={<Myprofile/>}/>
           <Route path="/chatpage/:id" element={<ChatPage/>}/>
+          <Route path="/InbChat" element={<InbChat/>}/>
         </Routes>
         </Router>
         </div>

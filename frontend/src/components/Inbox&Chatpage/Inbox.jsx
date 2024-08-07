@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineCamera } from 'react-icons/ai';
-import './inbox.css'
-import appContext from '../context/AppContext';
-import socket from '../socket';
+import '../inbox.css'
+import appContext from '../../context/AppContext';
+import socket from '../../socket';
 const Inbox = () => {
-  const {user,getUser,setLoader,onlineList,loader,setNotification,setChatLoader}=useContext(appContext);
+  const {user,getUser,setLoader,onlineList,loader,setNotification}=useContext(appContext);
   const [inbox,setInbox]=useState([]);
   const host=process.env.REACT_APP_HOST;
   const navigate=useNavigate();
@@ -55,7 +55,6 @@ const Inbox = () => {
         socket.emit("join room", user._id);
         setNotification(false);
         console.log(onlineList)
-        setChatLoader(true)
   }
 
 }
@@ -146,7 +145,7 @@ const Inbox = () => {
           }
           return(
           
-          <Link onClick={handlechat}  to={`/chatpage/${conv.sender._id===user._id?conv.receiver._id:conv.sender._id }`}key={index} className="flex items-center p-4 border-b border-gray-300 hover:bg-gray-100">
+          <Link onClick={handlechat}  to={`/${conv.sender._id===user._id?conv.receiver._id:conv.sender._id }`}key={index} className="flex items-center p-4 border-b border-gray-300 hover:bg-gray-100">
             <div className="relative">
               <img src={`data:image/jpeg;base64,${conv.sender._id===user._id?conv.receiver.image:conv.sender.image}`}  className={`w-12 h-12 rounded-full`} />
             </div>

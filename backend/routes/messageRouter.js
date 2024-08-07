@@ -8,17 +8,20 @@ const messageModel = require("../models/messageModel");
 //route to send message
 router.post("/sent/:id",userMiddleware, async (req, res) => {
     try {
+      
         let receiver_id=req.params.id;
         let { content } = req.body;
         let { email } = req.user;
         let sender = await userModel.findOne({ email: email});
+        let receiver= await userModel.findOne({_id:receiver_id})
         if (sender.friends.includes(receiver_id)) { 
             let message = await messageModel.create({
                 sender: sender._id,
                 receiver: receiver_id,
-                content
+                content,
+                delete: [sender._id, receiver._id]
             })
-            res.status(201).send({ success: true, message: message.content });
+            res.status(201).send({ success: true, message: message.content,message_id:message.id });
         }
         else {
             res.status(500).send("Internal Server Error");
@@ -33,18 +36,15 @@ router.post("/sent/:id",userMiddleware, async (req, res) => {
 router.get("/getmessages/:id",userMiddleware,async (req, res) => {
     try {
         let friends_id=req.params.id;
-        console.log(friends_id)
         let { email } = req.user;
         let user = await userModel.findOne({ email: email });
         if(!user) return res.status(401).send("Unauthorized");
         let messages = await messageModel.find({
             $or: [
-                { sender: user._id, receiver: friends_id },
-                { sender: friends_id, receiver: user._id }
+                { sender: user._id, receiver: friends_id ,senderDeleted:false},
+                { sender: friends_id, receiver: user._id,receiverDeleted:false }
             ]
         }).sort({ timestamp: -1 });
-        // let content = messages.map((e) => e.content)
-        // res.send(content)
         res.status(200).send(messages);
     } catch (error) {
         res.status(500).send("Not Found")
@@ -99,6 +99,38 @@ router.get('/inbox', userMiddleware, async (req, res) => {
 });
 
 
+//router to delete message
+
+router.get('/delete/:id',userMiddleware, async (req, res) => {
+    try {
+        let { email } = req.user;
+        let user = await userModel.findOne({ email: email });
+        if (!user) return res.status(401).send("Unauthorized user");
+
+        let message = await messageModel.findOne({ _id: req.params.id });
+        if (!message) return res.status(404).send("Message not found");
+
+        if (message.sender.toString() === user._id.toString()) {
+            message.senderDeleted = true;
+        } else if (message.receiver.toString() === user._id.toString()) {
+            message.receiverDeleted = true;
+        } else {
+            return res.status(403).send("User is not present");
+        }
+
+        if (message.senderDeleted && message.receiverDeleted) {
+            await messageModel.deleteOne({ _id: message._id });
+            return res.status(200).send("Message deleted");
+        }
+
+        await message.save();
+        res.status(200).send("Deleted");
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
 
 

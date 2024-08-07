@@ -9,6 +9,8 @@ const messageSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
     },
+   senderDeleted:{type:Boolean,default:false},
+   receiverDeleted:{type:Boolean,default:false},
     content: {
         type: String,
         required: true,

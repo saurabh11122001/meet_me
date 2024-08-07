@@ -9,7 +9,7 @@ const Stories = () => {
   ];
 
   return (
-    <div className="flex  overflow-x-auto px-1 gap-3">
+    <div className="flex bg-white  overflow-x-auto px-1 gap-3">
       <div className="relative border border-4 border-green-600 rounded-full ">
         <div className="w-14 h-14  rounded-full bg-blue-500 overflow-hidden">
           <img 

@@ -12,6 +12,7 @@ const AllStates = (props) => {
   const [notification,setNotification]=useState(false);
   const [notiData,setNotidata]=useState([]);
   const [selectedChatId,setSelectedChatId]=useState("");
+  const [chatLoader,setChatLoader]=useState(false);
 
   
   const getUser = async () => {
@@ -101,7 +102,7 @@ const AllStates = (props) => {
     <AppContext.Provider value={{loader,setLoader,inbox, setInbox,user, setUser,isAlert,
      setAlert,isonline,setOnline,getUser,
      setOnlineList,onlineList,receiver,setReceiver,getReceiver,selectedChatId,setSelectedChatId,notification,
-     setNotification,notiData,setNotidata}}>
+     setNotification,notiData,setNotidata,chatLoader,setChatLoader}}>
       {props.children}
     </AppContext.Provider>
   )

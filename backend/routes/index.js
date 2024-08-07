@@ -42,6 +42,7 @@ router.get("/allpost", userMiddleware, async (req, res) => {
 router.get("/getcomments/:id",userMiddleware,async (req,res)=>{
     try {
         let {email}=req.user;
+        if(!req.params.id) return
         let user= await userModel.findOne({email:email});
         if(!user) return res.status(401).send("Unauthorized user");
         let  comments = await postModel.findOne({_id: req.params.id})

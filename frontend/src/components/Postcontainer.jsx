@@ -101,7 +101,7 @@ const Postcontainer = ({ posts }) => {
   };
   return (
     <>
-      <div className="px-1 py-1 bg-white">
+      <div className="px-1 py-1 h-5/6 overflow-y-auto">
         {posts.map((post, index) => (
           <div
             key={index}
@@ -153,7 +153,7 @@ const Postcontainer = ({ posts }) => {
                     <AiOutlineClose
                       onClick={() => {
                         setComment(false);
-                        setIndex(false);
+                        setIndex(null);
                       }}
                     />
                   </div>

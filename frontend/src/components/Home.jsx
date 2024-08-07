@@ -4,6 +4,7 @@ import Loader from './Loader';
 import Stories from "./Stories";
 import Postcontainer from './Postcontainer';
 import Footer from './Footer';
+import Friends from './Friends';
 import { useNavigate } from 'react-router-dom';
 import Alert from './Alert';
 import appContext from '../context/AppContext';
@@ -80,14 +81,19 @@ const Home = () => {
 
   return (
     <>
-      <div className="relative h-screen" ref={scrollRef} data-scroll-container>
-        <div data-scroll>
+      <div className="lg:bg-gray-200 relative h-screen lg:w-screen " ref={scrollRef} data-scroll-container>
+        <div data-scroll className='lg:bg-white lg:max-h-screen lg:flex lg:bg-red-200'>
+        <Footer />
+          <div className='lg:w-3/6'>
           {isAlert && <Alert />}
           <Navbar />
           <Loader />
           <Stories />
           {posts.length > 0 && <Postcontainer posts={posts} />}
-          <Footer />
+          </div>
+          {user?<div className='hidden lg:block'>
+          <Friends/>
+          </div>:''}
         </div>
       </div>
     </>

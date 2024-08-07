@@ -8,7 +8,7 @@ const Navbar = () => {
   const {setLoader}=useContext(appContext);
   
   return (
-    <nav className="bg-gradient-to-r from-blue-800 to-purple-600 p-4">
+    <nav className="lg:hidden bg-gradient-to-r from-blue-800 to-purple-600 p-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Left Side: Web App Name */}
         <div className="flex items-center">

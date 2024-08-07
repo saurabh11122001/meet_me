@@ -4,48 +4,63 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import appContext from "../context/AppContext";
 import socket from "../socket";
+
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchUsers, setSearchUsers] = useState([]);
-  const { user, getUser } = useContext(appContext);
+  const { user, getUser,onlineList } = useContext(appContext);
   const [sent, setSent] = useState(false);
   const host = process.env.REACT_APP_HOST;
   const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      const fetchuser = async () => {
+    const fetchUser = async () => {
+      try {
         await getUser();
-      };
-      fetchuser();
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  useEffect(() => {
-    async function search() {
-      const response = await fetch(`${host}/users/getusers`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-      if (response.ok) {
-        let data = await response.json();
-        setSearchUsers(data);
-      } else {
-        navigate("/login");
+      } catch (error) {
+        console.log(error);
       }
-    }
+    };
+    fetchUser();
+  }, [getUser]); 
+
+  useEffect(() => {
+    const search = async () => {
+      try {
+        const response = await fetch(`${host}/users/getusers`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setSearchUsers(data);
+        } else {
+          navigate("/login");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     search();
-  }, []);
+  }, [host, navigate]); 
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  const handlechat=()=>{
+    if (user && user._id) {
+      socket.emit("join room", user._id);
+      console.log(onlineList)
+}
+}
+
   const handleAdd = async (sender_id, receiver_id, fullname) => {
     try {
-      let response = await fetch(
+      const response = await fetch(
         `${process.env.REACT_APP_HOST}/users/friendreq/${receiver_id}`,
         {
           method: "GET",
@@ -97,18 +112,18 @@ const Search = () => {
               <Link
                 to=""
                 key={index}
-                className="hover:bg-gray-200 hover:cursor-pointer item-box flex bg-red-200 justify-between items-center space-x-4   bg-white"
+                className="hover:bg-gray-200 hover:cursor-pointer item-box flex bg-red-200 justify-between items-center space-x-4 bg-white"
               >
                 <div className="flex items-center gap-3 justify-center">
                   <img
-                       src={`data:image/jpeg;base64,${User?.image}`}
+                    src={`data:image/jpeg;base64,${User?.image}`}
                     className="w-12 h-12 rounded-full"
                   />
                   <span className="text-lg font-medium">{User?.fullname}</span>
                 </div>
                 <button className="button">
                   {user?.friends.some((data) => data._id === User?._id) ? (
-                    <small>Message</small>
+                    <Link onClick={handlechat} to={`/chatpage/${User._id}`}>Message</Link>
                   ) : sent || User?.friendRequest.includes(user?._id) ? (
                     <small>Sent</small>
                   ) : (
