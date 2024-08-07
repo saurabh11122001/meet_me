@@ -6,39 +6,40 @@ MeetMe is a Social Media Web Application designed for mobile devices, offering a
 ## Some Screenshots
 
 ### Login Page
-![Login Page](Screenshots/Login.png)
 *This is the Login and Signup Page where users can create their accounts using the Signup button.*
+![Login Page](Screenshots/Login.png)
 
 ### Home Page
-![Home Page](Screenshots/Home.png)
 *The Home Page contains all user posts, allowing users to like and comment on others' posts. Users can also navigate to other pages using the footer navbar.*
+![Home Page](Screenshots/Home.png)
 
 ### Chat Page
-![Chat Page](Screenshots/Chat.png)
 *This page shows the chat interface for two friends.*
+![Chat Page](Screenshots/Chat.png)
 
 ### Inbox Page
-![Inbox Page](Screenshots/Inbox.png)
 *The Inbox Page displays recent messages from all friends.*
+![Inbox Page](Screenshots/Inbox.png)
 
 ### Active Friends
-![Active Friends](Screenshots/ActiveUser.png)
 *This image shows active friends.*
+![Active Friends](Screenshots/ActiveUser.png)
 
-![Online Friends](Screenshots/Online.png)
 *This image shows friends currently online.*
+![Online Friends](Screenshots/Online.png)
 
 ### Upload Page
-![Upload Page](Screenshots/Upload.png)
 *This page allows users to upload media.*
+![Upload Page](Screenshots/Upload.png)
 
 ### Post Page
-![Post Page](Screenshots/Post.png)
 *This page displays the user's posts.*
+![Post Page](Screenshots/Post.png)
 
 ### Comment Page
-![Comment Page](Screenshots/Comment.png)
 *This page shows the comments on a post.*
+![Comment Page](Screenshots/Comment.png)
+
 
 ## How to Run
 1. **Clone the Repository**:
